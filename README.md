@@ -37,6 +37,8 @@
 
   
 
+- [ ] Capture unknown event?
+
 - [ ] Errors
 
   - [ ] default exit process
@@ -289,6 +291,55 @@
   ```
 
   
+
+### Error handling
+
+- An event with name `error` has special treatment.
+
+- If ther is no handler for it, **node process will crash** when it is emitted on any emitter.
+
+- Hanlding error event : 
+
+  ```typescript
+  import EventEmitter from 'events';
+  
+  class HelloEmitter extends EventEmitter{
+      constructor() {
+          super();
+          this.on('error', this.onError);
+      }
+      sayHello(name: string){
+          this.emit("hello", name);
+      }
+      onHello(callback: (name: string) => void ){
+          this.on('hello', callback);
+      }
+      onError(error: any){
+          console.error("Error : ", error);
+          this.removeAllListeners();
+      }
+  }
+  
+  const helloEmitter = new HelloEmitter();
+  
+  helloEmitter.onHello((name : string) => {
+      console.log("Hello from callback : ", name);
+  });
+  
+  console.log("before emit")
+  helloEmitter.emit("error", new Error("an error message"));
+  helloEmitter.emit("hello", "nishants");
+  console.log("after emit")
+  
+  // Outptut : 
+  // before emit
+  // Error :  an error message
+  // after emit
+  ```
+
+  
+
+
 
 
 
