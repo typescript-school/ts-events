@@ -33,23 +33,15 @@
 
   > If no error handler created, nodejs crashes on error events. 
 
-- 
+- Max Listeners
+
+  > Default is 10.
+  >
+  > More than max listener will show warning of memory leak.
+  >
+  > use `emitter.setMaxListener(n)` to set to `Infinity` or as you like.
 
   
-
-- [ ] Capture unknown event?
-
-- [ ] Errors
-
-  - [ ] default exit process
-  - [ ] setting error listener
-
-- [ ] Max event listeners: https://nodejs.org/api/events.html#events_events_defaultmaxlisteners
-
-  - [ ] set max listener
-  - [ ] get max lsitener
-  - [ ] ***defualt is 10***
-  - [ ] can be set to `Infinity` (or `0`)
 
 - [ ] Prepend listerner : https://nodejs.org/api/events.html#events_emitter_prependlistener_eventname_listener
 
@@ -339,9 +331,31 @@
 
   
 
+### Number of event listeners
 
+- By default there are only `10` listeners. For more than that, you get warning : 
 
+  ```
+  MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 hello listeners added to [HelloEmitter].
+  ```
 
+- `setMaxListeners` to set to `Infinity` 
+
+  ```typescript
+  const helloEmitter = new HelloEmitter();
+  
+  // Set max listener to avoid warnings on memory leak
+  helloEmitter.setMaxListeners(Infinity);
+  
+  const listenerCount = 13;
+  for(let i =0; i < listenerCount; i++){
+      helloEmitter.onHello((name : string) => {
+          console.log(`#${i}: `, name);
+      });
+  }
+  ```
+
+  
 
 **Setup**
 
