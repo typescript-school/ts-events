@@ -10,7 +10,7 @@ class HelloEmitter extends EventEmitter{
 }
 
 const helloEmitter = new HelloEmitter();
-// helloEmitter.setMaxListeners(Infinity);
+helloEmitter.setMaxListeners(Infinity);
 const listenerCount = 13;
 for(let i =0; i < listenerCount; i++){
     helloEmitter.onHello((name : string) => {

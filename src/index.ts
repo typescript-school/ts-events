@@ -6,4 +6,5 @@
 // import './HelloEmitterAsync';
 // import './HelloEmitterOnce';
 // import './HelloEmitterError';
-import './HelloEmitterListenerCount';
+// import './HelloEmitterListenerCount';
+import './HelloEmitterNewListener';

@@ -41,7 +41,19 @@
   >
   > use `emitter.setMaxListener(n)` to set to `Infinity` or as you like.
 
-  
+- Prepend Listeners
+
+  > use `event.prependListener` or `emitter.prependOnceListener` to add as first listener. 
+  >
+  > Allows duplicate listener.
+
+- Remove listeners
+
+  > use `emiter.removeAllListeners` or `emitter.removeListener(eventName, listener)`
+
+- Capturinig when a new listener is added 
+
+  > use `helloEmitter.on(` **`'newListener'`** `, calback)` to run code whenever a new listener is added.
 
 - [ ] Prepend listerner : https://nodejs.org/api/events.html#events_emitter_prependlistener_eventname_listener
 
@@ -353,6 +365,38 @@
           console.log(`#${i}: `, name);
       });
   }
+  ```
+
+
+
+### Capturinig when a new listener is added 
+
+- Use event ``newListener`` to get callback and event name whenever a new listener is added.
+
+  ```typescript
+  helloEmitter.on('newListener', function addBeforeListener(this: HelloEmitter,event, listener) {
+      console.log(`Added new listener on ${event} : ${listener}`)
+  });
+  
+  helloEmitter.onHello((name : string) => {
+    console.log("First callback : ", name);
+  });
+  
+  helloEmitter.onHello((name : string) => {
+      console.log("Second callback : ", name);
+  });
+  
+  helloEmitter.sayHello("nishants");
+  
+  // Output :
+  //Added new listener on hello : (name) => {
+  //     console.log("First callback : ", name);
+  // }
+  // Added new listener on hello : (name) => {
+  //     console.log("Second callback : ", name);
+  // }
+  // First callback :  nishants
+  // Second callback :  nishants
   ```
 
   
