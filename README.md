@@ -11,13 +11,13 @@
 
   > event names are camelCase strings (valid js property names) and listeners ares imply functions
 
-- Events are ***synchronous***
-
-  >  
-
 - `this` inside listerner functions
 
   > `this` inside listerner function refers to the emittor.
+
+- Events are ***synchronous***
+
+  >  
 
   
 
@@ -73,7 +73,32 @@
 
   
 
+### Abstracting emitter in API 
 
+- Classes can abstract emitter, for example : 
+
+  ```typescript
+  import EventEmitter from 'events';
+  
+  class HelloEmitter extends EventEmitter{
+      sayHello(name: string){
+          this.emit("hello", name);
+      }
+      onHello(callback: (name: string) => void ){
+          this.on('hello', callback);
+      }
+  }
+  
+  const helloEmitter = new HelloEmitter();
+  
+  helloEmitter.onHello((name : string) => {
+      console.log("Hello from callback : ", name);
+  });
+  
+  helloEmitter.sayHello("nishants");
+  ```
+
+  
 
 ### Events are **Synchrounous**
 
