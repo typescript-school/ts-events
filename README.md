@@ -23,6 +23,49 @@
 
 - Running listernes once
 
+  > `emitter.once` removes listener before invoking them. So they run once.
+
+- Default listeners
+
+  > By default `10` listeners only. Use ``setMaxListeners(n)` to set to `Infinity` or any other number
+
+- Error handler 
+
+  > If no error handler created, nodejs crashes on error events. 
+
+- 
+
+  
+
+- [ ] Errors
+
+  - [ ] default exit process
+  - [ ] setting error listener
+
+- [ ] Max event listeners: https://nodejs.org/api/events.html#events_events_defaultmaxlisteners
+
+  - [ ] set max listener
+  - [ ] get max lsitener
+  - [ ] ***defualt is 10***
+  - [ ] can be set to `Infinity` (or `0`)
+
+- [ ] Prepend listerner : https://nodejs.org/api/events.html#events_emitter_prependlistener_eventname_listener
+
+- [ ] Remove listener : 
+
+- [ ] Get events names
+
+- [ ] Get all listeners
+
+- [ ] prepend once listener
+
+- [ ] remove all listeners
+
+- [ ] Monitor externally
+
+  - [ ] ``events.getEventListeners(emitterOrTarget, eventName)``
+  - [ ] ``
+
   
 
 ### **EventEmitter** 
@@ -200,17 +243,58 @@
 
   
 
+### Running listener once 
 
+- If we emit event multiple time in previous examples, it will run listener each time
+
+  ```typescript
+  helloEmitter.sayHello("1");
+  helloEmitter.sayHello("2");
+  helloEmitter.sayHello("3");
+  
+  // Outptut: 
+  // Hello from callback :  1
+  // Hello from callback :  2
+  // Hello from callback :  3
+  ```
+
+- Use `emitter.once` 
+
+  > emitter will remove listener before invoking it the first time. Hence no further invocations.
+
+- ```typescript
+  import EventEmitter from 'events';
+  
+  class HelloEmitter extends EventEmitter{
+      sayHello(name: string){
+          this.emit("hello", name);
+      }
+      onHello(callback: (name: string) => void ){
+          this.on('hello', callback);
+      }
+  }
+  
+  const helloEmitter = new HelloEmitter();
+  
+  helloEmitter.onHello((name : string) => {
+      console.log("Hello from callback : ", name);
+  });
+  
+  helloEmitter.sayHello("1");
+  helloEmitter.sayHello("2");
+  helloEmitter.sayHello("3");
+  
+  // Outptut: 
+  // Hello from callback :  1
+  ```
+
+  
 
 
 
 **Setup**
 
 - Create typescript cli app from https://github.com/typescript-school/ts-cli-app
-
-
-
-
 
 
 

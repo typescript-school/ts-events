@@ -3,4 +3,5 @@
 // import './HelloEmitterDemo';
 // import './HelloEmitterThis';
 // import './HelloEmitterApi';
-import './HelloEmitterAsync';
+// import './HelloEmitterAsync';
+import './HelloEmitterOnce';
