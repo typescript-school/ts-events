@@ -17,7 +17,11 @@
 
 - Events are ***synchronous***
 
-  >  
+  >  Listeners invoked asynchrounously in order of registration
+  >
+  > Use custom logic to run synchronously using `setImmediate()`
+
+- Running listernes once
 
   
 
@@ -103,7 +107,98 @@
 ### Events are **Synchrounous**
 
 - For each event emitted, the listerners are invoked asynchounously
+
+  ```typescript
+  import EventEmitter from 'events';
+  
+  class HelloEmitter extends EventEmitter{
+      sayHello(name: string){
+          this.emit("hello", name);
+      }
+      onHello(callback: (name: string) => void ){
+          this.on('hello', callback);
+      }
+  }
+  
+  const helloEmitter = new HelloEmitter();
+  
+  helloEmitter.onHello((name : string) => {
+      console.log("first callback : ", name);
+  });
+  
+  helloEmitter.onHello((name : string) => {
+      console.log("second callback : ", name);
+      // while(true){}
+  });
+  
+  helloEmitter.onHello((name : string) => {
+      console.log("third callback : ", name);
+  });
+  
+  console.log("before emit")
+  helloEmitter.sayHello("nishants");
+  console.log("after emit")
+  
+  // Output : 
+  // before emit
+  // first callback :  nishants
+  // second callback :  nishants
+  // third callback :  nishants
+  // after emit
+  
+  ```
+
+  
+
 - ***Does that mean a blocking listener with block ?*** 
+
+  > Yes.
+
+  Blocking 
+
+  ```typescript
+  helloEmitter.onHello((name : string) => {
+      console.log("first callback : ", name);
+  });
+  
+  helloEmitter.onHello((name : string) => {
+      console.log("second callback : ", name);
+      while(true){}
+  });
+  
+  helloEmitter.onHello((name : string) => {
+      console.log("third callback : ", name);
+  });
+  
+  helloEmitter.sayHello("nishants");
+  
+  // Output : 
+  // first callback :  nishants
+  // second callback :  nishants
+  ```
+
+
+
+- Running asynchounously using `setImmediate`
+
+  ```typescript
+  onHello(callback: (name: string) => void ){
+    this.on('hello', (name) => {
+      setImmediate(() => {
+        callback(name);
+      })
+    });
+  }
+  
+  // Output : 
+  // before emit
+  // after emit
+  // first callback :  nishants
+  // second callback :  nishants
+  // third callback :  nishants
+  ```
+
+  
 
 
 
