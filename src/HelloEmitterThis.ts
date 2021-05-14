@@ -9,7 +9,8 @@ class HelloEmitter extends EventEmitter{
 const helloEmitter = new HelloEmitter();
 
 helloEmitter.on('hello', function sayHello(this: HelloEmitter, name: string){
-    this.sayHello(name);
+    const message = this.sayHello(name);
+    console.log("Message from HelloEmitter.sayHello", message)
 });
 
 helloEmitter.emit("hello", "nishants");

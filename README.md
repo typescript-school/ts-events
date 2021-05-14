@@ -15,6 +15,10 @@
 
   >  
 
+- `this` inside listerner functions
+
+  > `this` inside listerner function refers to the emittor.
+
   
 
 ### **EventEmitter** 
@@ -25,7 +29,7 @@
 
 - **CamelCase** is the preferred convention for naming events.
 
-  Create a class `src/HelloEmittor.ts`
+  Create a class `src/HelloEmitter.ts`
 
   ```typescript
   import EventEmitter from 'events';
@@ -37,6 +41,31 @@
   // An events that takes a string arg
   helloEmitter.on('hello', function sayHello(name){
       console.log("Hello ", name);
+  });
+  
+  helloEmitter.emit("hello", "nishants");
+  ```
+
+
+
+### Using `this` keyword in listeners
+
+- `this` keyword in listerner referes to the emitter object
+
+  ```typescript
+  import EventEmitter from 'events';
+  
+  class HelloEmitter extends EventEmitter{
+      sayHello(name: string){
+          return `Hello ${name}`
+      }
+  }
+  
+  const helloEmitter = new HelloEmitter();
+  
+  helloEmitter.on('hello', function sayHello(this: HelloEmitter, name: string){
+      const message = this.sayHello(name);
+      console.log("Message from HelloEmitter.sayHello", message)
   });
   
   helloEmitter.emit("hello", "nishants");

@@ -1,3 +1,4 @@
 #!/usr/bin/env node
 
-import './EventEmittorDemo';
+// import './HelloEmitterDemo';
+import './HelloEmitterThis';
