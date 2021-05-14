@@ -1,12 +1,12 @@
 import EventEmitter from 'events';
 
-class MyEmitter extends EventEmitter {}
+class HelloEmitter extends EventEmitter{}
 
-const myEmitter = new MyEmitter();
+const helloEmitter = new HelloEmitter();
 
-myEmitter.on('event', () => {
-    console.log('an event occurred!');
+// An events that takes a string arg
+helloEmitter.on('hello', function sayHello(name){
+    console.log("Hello ", name);
 });
 
-myEmitter.emit('event');
-
+helloEmitter.emit("hello", "nishants");
